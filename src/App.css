@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Graphie";
+  color: #1b1a16;
+  font-weight: 500;
+  letter-spacing: 0.0325rem;
+  background-color: #f9f9fb;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.ligth {
+  font-weight: 300;
+}
+
+.gray{
+  color: #a1a1a1;
+  font-size: 0.9rem;
+}

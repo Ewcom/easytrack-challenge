@@ -1,27 +1,86 @@
 import { Divider, Space } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Logo from "./Logo";
 import NavbarButton from "./NavbarButton";
 import { Notification, Truck, AlertCircle, Flag, ThreeDCubeSphere, Dashboard, Dots } from "tabler-icons-react";
 import CustomButton from "../../../styles/CustomButton";
 const Navbar = () => {
+  const [active, setActive] = useState(4);
+
+  function handleActive(id: number) {
+    setActive(id);
+  }
+
   return (
     <NavbarContainer>
       <section className="top">
         <Logo />
         <Space h={"md"} />
         <div className="buttonsContainer">
-          <NavbarButton notifications={10} icon={<AlertCircle size={"25px"} />} text="Requests" />
-          <NavbarButton notifications={1} icon={<Notification size={"25px"} />} text="Notifications" />
+          <NavbarButton
+            active={active === 1}
+            onClick={() => {
+              handleActive(1);
+            }}
+            notifications={10}
+            icon={<AlertCircle size={"25px"} />}
+            text="Requests"
+          />
+          <NavbarButton
+            active={active === 2}
+            onClick={() => {
+              handleActive(2);
+            }}
+            notifications={1}
+            icon={<Notification size={"25px"} />}
+            text="Notifications"
+          />
           <Space h={"xl"} />
           <Divider size={"sm"} />
           <Space h={"xl"} />
-          <NavbarButton icon={<Dashboard size={"25px"} />} text="Dashboard" />
-          <NavbarButton active icon={<Truck size={"25px"} />} text="Shipments" />
-          <NavbarButton notifications={2} important icon={<ThreeDCubeSphere size={"25px"} />} text="Parcels" />
-          <NavbarButton icon={<Flag size={"25px"} />} text="Branches" />
-          <NavbarButton icon={<Notification size={"25px"} />} text="Clients" />
+          <NavbarButton
+            active={active === 3}
+            onClick={() => {
+              handleActive(3);
+            }}
+            icon={<Dashboard size={"25px"} />}
+            text="Dashboard"
+          />
+          <NavbarButton
+            active={active === 4}
+            onClick={() => {
+              handleActive(4);
+            }}
+            icon={<Truck size={"25px"} />}
+            text="Shipments"
+          />
+          <NavbarButton
+            active={active === 5}
+            onClick={() => {
+              handleActive(5);
+            }}
+            notifications={2}
+            important
+            icon={<ThreeDCubeSphere size={"25px"} />}
+            text="Parcels"
+          />
+          <NavbarButton
+            active={active === 6}
+            onClick={() => {
+              handleActive(6);
+            }}
+            icon={<Flag size={"25px"} />}
+            text="Branches"
+          />
+          <NavbarButton
+            active={active === 7}
+            onClick={() => {
+              handleActive(7);
+            }}
+            icon={<Notification size={"25px"} />}
+            text="Clients"
+          />
         </div>
         <Space h={"xl"} />
       </section>
@@ -64,10 +123,11 @@ const NavbarContainer = styled.div`
 
     .user {
       display: flex;
-      justify-content:center;
-      align-items:center;
+      justify-content: center;
+      align-items: center;
       padding: 2rem;
-      gap:10px;
+      gap: 10px;
+      cursor: pointer;
 
       .info {
         display: flex;

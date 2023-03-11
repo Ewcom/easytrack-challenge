@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 
-interface props extends INavbarButtonProps {
+interface props extends INavbarButtonProps, React.ComponentPropsWithoutRef<"button"> {
   icon: React.ReactNode;
   text: string;
   notifications?: number;
@@ -11,9 +11,9 @@ interface INavbarButtonProps {
   active?: boolean;
   important?: boolean;
 }
-const NavbarButton: FC<props> = ({ icon, text, active, notifications, important }) => {
+const NavbarButton: FC<props> = ({ icon, text, active, notifications, important, ...props }) => {
   return (
-    <NavbarButtonContainer active={active!} important={important}>
+    <NavbarButtonContainer {...props} active={active!} important={important}>
       <div className="container">
         <div className="icon">{icon}</div>
         <span className="text">{text}</span>

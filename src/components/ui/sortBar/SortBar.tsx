@@ -9,26 +9,31 @@ const SortBar = () => {
     <SortBarContainer>
       <div className="container">
         <h2>Shipments</h2>
-        <Space w={"md"}/>
-        <CustomButton style={{padding:"0.8rem"}} variant="white">Arrival (20)</CustomButton>
-        <Space w={"md"}/>
-        <CustomButton style={{padding:"0.8rem"}} variant="default">Avaliable (5)</CustomButton>
-        <Space w={"md"}/>
-        <CustomButton style={{padding:"0.8rem"}} variant="white">Arrival (20)</CustomButton>
-        <Space w={"xl"}/>
-
+        <Space w={"md"} />
+        <CustomButton style={{ padding: "0.8rem" }} variant="white">
+          Arrival (20)
+        </CustomButton>
+        <Space w={"md"} />
+        <CustomButton style={{ padding: "0.8rem" }} variant="default">
+          Avaliable (5)
+        </CustomButton>
+        <Space w={"md"} />
+        <CustomButton style={{ padding: "0.8rem" }} variant="white">
+          Arrival (20)
+        </CustomButton>
+        <Space w={"xl"} />
       </div>
       <div className="container">
         <div className="select">
           <label>Sort by:</label>
           <CustomSelect variant="white" defaultValue={"Time"} data={["Time"]} />
         </div>
-        <Space w={"xl"}/>
+        <Space w={"xl"} />
 
         <div className="select">
           <label>Departure date:</label>
 
-          <CustomSelect  variant="white" defaultValue={"15 Jun"} data={["15 Jun"]} />
+          <CustomSelect variant="white" defaultValue={"15 Jun"} data={["15 Jun"]} />
         </div>
       </div>
     </SortBarContainer>

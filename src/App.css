@@ -34,3 +34,10 @@ main{
   align-items: center;
   width: calc(100vw - 300px);
 }
+
+.cardContainer{
+  padding:1rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap:1rem;
+}

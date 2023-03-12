@@ -102,7 +102,8 @@ const Navbar = () => {
 };
 
 const NavbarContainer = styled.div`
-  max-width: 250px;
+  width: 300px;
+  box-sizing:border-box;
   height: 100vh;
   background-color: white;
   display: flex;

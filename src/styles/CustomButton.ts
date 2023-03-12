@@ -5,7 +5,7 @@ interface ICustomButtonProps {
 }
 
 const CustomButton = styled.button<ICustomButtonProps>`
- cursor: pointer;
+  cursor: pointer;
   background-color: ${(props) => (props.variant === "default" ? props.theme.main : props.theme.purpleGray)};
   border: none;
   color: ${(props) => (props.variant === "default" ? "white" : props.theme.main)};
@@ -16,6 +16,7 @@ const CustomButton = styled.button<ICustomButtonProps>`
   font-size: 0.7rem;
   letter-spacing: 0.05rem;
   width: 90%;
+  min-width: 120px;
   margin: 0px auto;
 `;
 

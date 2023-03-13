@@ -7,3 +7,9 @@ export interface ITruckInfo {
   trip: string;
   deliveryDate: Date;
 }
+
+export interface IPackageInfo {
+  parcelNumber: string;
+  packageWeight: number;
+  admisionDate: Date;
+}

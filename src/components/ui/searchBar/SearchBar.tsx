@@ -18,7 +18,6 @@ const SearchBar = () => {
         </div>
         <div className="select">
           <label>Ap</label>
-
           <CustomSelect variant="default" defaultValue={"1"} data={["1"]} />
         </div>
         <CurrentTime />
@@ -32,7 +31,7 @@ const SearchBarContainer = styled.div`
   border-radius: 5px;
   height: 30px;
   padding: 1rem;
-  width:calc(100vw - 400px);
+  width: 94%;
   margin: 1rem auto;
   display: flex;
   align-items: center;
@@ -48,14 +47,13 @@ const SearchBarContainer = styled.div`
     justify-content: center;
     align-items: center;
     background-color: #f9f9fb;
-    padding-left:8px;
-    border-radius:8px;
-
+    padding-left: 8px;
+    border-radius: 8px;
 
     label {
       font-size: 0.8rem;
-        color: #a0a0a0;
-        font-weight:bold;
+      color: #a0a0a0;
+      font-weight: bold;
     }
   }
 `;

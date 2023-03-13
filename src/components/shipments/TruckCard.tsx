@@ -1,13 +1,14 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import styled, { useTheme } from "styled-components";
 import { ITruckInfo } from "../../interfaces";
 import TruckImage from "./TruckImage";
 
-interface props {
+interface props extends React.ComponentPropsWithoutRef<"div"> {
   truckData: ITruckInfo;
+  simple?: boolean;
 }
 
-const ShipmentCard: FC<props> = ({ truckData }) => {
+const TruckCard: FC<props> = ({ truckData, simple, ...props }) => {
   const theme = useTheme();
 
   function getPercentageColor(percentage: number) {
@@ -21,12 +22,16 @@ const ShipmentCard: FC<props> = ({ truckData }) => {
   }
 
   return (
-    <ShipmentContainer>
+    <ShipmentContainer {...props}>
       <div className="title">
-        <div className="container">
-          <h2 className="destination">{truckData.trip}</h2>
-          <span className="date gray">{new Date().toLocaleString("ES-MX")}</span>
-        </div>
+        {!simple ? (
+          <div className="container">
+            <h2 className="destination">{truckData.trip}</h2>
+            <span className="date gray">{truckData.deliveryDate.toLocaleString()}</span>
+          </div>
+        ) : (
+          <h2 className="destination">Truck Load</h2>
+        )}
         <span style={{ color: getPercentageColor(truckData.percentage) }} className="percentage">
           {truckData.percentage}%
         </span>
@@ -36,17 +41,25 @@ const ShipmentCard: FC<props> = ({ truckData }) => {
         <div className="info">
           <div className="data">
             <p className="gray">Avaliable Kg</p>
-            <p className="item">{`${truckData.currentKG}/${truckData.maxKG}`}</p>
+            <p style={{ fontSize: "1.5rem" }} className="item">
+              {truckData.currentKG}/
+              <span style={{ fontSize: "1.5rem" }} className="gray">
+                {truckData.maxKG}
+              </span>
+            </p>
           </div>
-          <div className="data">
-            {" "}
-            <p className="gray">Shipment Number</p>
-            <p className="item">V{truckData.shipmentNumber}</p>
-          </div>
-          <div className="data">
-            <p className="gray">Truck</p>
-            <p className="item">{truckData.truckName}</p>
-          </div>
+          {!simple ? (
+            <>
+              <div className="data">
+                <p className="gray">Shipment Number</p>
+                <p className="item">V{truckData.shipmentNumber}</p>
+              </div>
+              <div className="data">
+                <p className="gray">Truck</p>
+                <p className="item">{truckData.truckName}</p>
+              </div>
+            </>
+          ) : null}
         </div>
         <TruckImage percentage={truckData.percentage} />
       </div>
@@ -55,10 +68,16 @@ const ShipmentCard: FC<props> = ({ truckData }) => {
 };
 
 const ShipmentContainer = styled.div`
+  cursor: pointer;
   background-color: white;
   border-radius: 8px;
   padding: 1rem;
   min-width: 600px;
+  transition: all 0.3s ease;
+
+  /* &:hover {
+    transform: scale(1.01);
+  } */
 
   .container {
     display: flex;
@@ -95,4 +114,4 @@ const ShipmentContainer = styled.div`
   }
 `;
 
-export default ShipmentCard;
+export default TruckCard;

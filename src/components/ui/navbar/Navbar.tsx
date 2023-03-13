@@ -1,11 +1,30 @@
 import { Divider, Space } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import styled from "styled-components";
 import Logo from "./Logo";
 import NavbarButton from "./NavbarButton";
-import { Notification, Truck, AlertCircle, Flag, ThreeDCubeSphere, Dashboard, Dots } from "tabler-icons-react";
+import {
+  Notification,
+  Truck,
+  AlertCircle,
+  Flag,
+  ThreeDCubeSphere,
+  Dashboard,
+  Dots,
+  ArrowBadgeLeft,
+} from "tabler-icons-react";
 import CustomButton from "../../../styles/CustomButton";
-const Navbar = () => {
+
+interface INavbarStyleProps {
+  isOpen?: boolean;
+}
+
+interface props {
+  setIsNavbarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isNavbarOpen: boolean;
+}
+
+const Navbar: FC<props> = ({ isNavbarOpen, setIsNavbarOpen }) => {
   const [active, setActive] = useState(4);
 
   function handleActive(id: number) {
@@ -13,7 +32,15 @@ const Navbar = () => {
   }
 
   return (
-    <NavbarContainer>
+    <NavbarContainer isOpen={isNavbarOpen}>
+      <div
+        className="hideButton"
+        onClick={() => {
+          setIsNavbarOpen(!isNavbarOpen);
+        }}
+      >
+        <ArrowBadgeLeft strokeWidth={"1px"} size={"30px"} />
+      </div>
       <section className="top">
         <Logo />
         <Space h={"md"} />
@@ -101,14 +128,33 @@ const Navbar = () => {
   );
 };
 
-const NavbarContainer = styled.div`
+const NavbarContainer = styled.div<INavbarStyleProps>`
   width: 300px;
-  box-sizing:border-box;
+  box-sizing: border-box;
   height: 100vh;
   background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  left: ${({ isOpen }) => (isOpen ? "0" : "-280px")};
+
+  .hideButton {
+    cursor: pointer;
+    border: 8px solid #f9f9fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: -24px;
+    top: 50px;
+    background-color: #e5e5fb;
+    border-radius: 100%;
+    color: ${({ theme }) => theme.main};
+    transition: all 0.3s ease-in-out;
+    transform: ${({ isOpen }) => (isOpen ? "rotate(0deg)" : "rotate(180deg)")};
+  }
 
   .buttonsContainer {
     display: flex;

@@ -48,7 +48,7 @@ const TruckImageContainer = styled.div<ITruckImageContainer>`
     top: 1px;
     left: 1px;
     width: 106%;
-    height: 68%;
+    height: 145px;
     transition: all 0.5s ease;
   }
 

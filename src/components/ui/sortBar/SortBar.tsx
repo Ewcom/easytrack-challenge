@@ -1,5 +1,4 @@
 import { Space } from "@mantine/core";
-import React from "react";
 import styled from "styled-components";
 import CustomButton from "../../../styles/CustomButton";
 import CustomSelect from "../../../styles/CustomSelect";

@@ -1,5 +1,5 @@
 import { Checkbox, Divider } from "@mantine/core";
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { Draggable } from "@hello-pangea/dnd";
 import styled from "styled-components";
 import { packageInfoArray } from "../../dummyData";
@@ -7,18 +7,23 @@ import { IPackageInfo } from "../../interfaces/index";
 
 interface props extends React.ComponentPropsWithRef<"div"> {
   innerRef?: React.Ref<HTMLDivElement>;
+  packagesOnTruck: IPackageInfo[];
 }
-const Packages: FC<props> = ({ innerRef, ...rest }) => {
+const Packages: FC<props> = ({ packagesOnTruck, innerRef, ...rest }) => {
+  const packagesTotalWeight = useMemo(
+    () => packagesOnTruck.reduce((acc, pckg) => acc + pckg.packageWeight, 0),
+    [packagesOnTruck]
+  );
   return (
     <PackagesContainer {...rest} ref={innerRef}>
       <div className="title">
         <h2>Available packages</h2>
 
         <span>
-          Selected: <span>0</span>
+          Selected: <span>{packagesOnTruck.length}</span>
         </span>
         <span>
-          Weight, kg: <span>0</span>
+          Weight, kg: <span>{packagesTotalWeight}</span>
         </span>
       </div>
       <div className="header">
@@ -42,7 +47,13 @@ const Packages: FC<props> = ({ innerRef, ...rest }) => {
                   className="package"
                 >
                   <li>
-                    <Checkbox color={"grape"} label={packageInfo.parcelNumber} />
+                    <Checkbox
+                      checked={
+                        packagesOnTruck.find((pckg) => pckg.parcelNumber === packageInfo.parcelNumber) ? true : false
+                      }
+                      color={"grape"}
+                      label={packageInfo.parcelNumber}
+                    />
                   </li>
                   <li>{packageInfo.packageWeight}</li>
                   <li>{packageInfo.admisionDate.toLocaleDateString()}</li>
@@ -90,7 +101,13 @@ const PackagesContainer = styled.div`
   }
 
   .package {
+    cursor: -webkit-grab;
     display: flex;
+
+    .active {
+      background-color: ${({ theme }) => theme.main};
+      border-color: ${({ theme }) => theme.main};
+    }
   }
 `;
 

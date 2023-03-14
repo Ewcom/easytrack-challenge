@@ -6,6 +6,8 @@ import TruckCard from "../shipments/TruckCard";
 import Packages from "./Packages";
 import Tiers from "./Tiers";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+import { Space } from "@mantine/core";
+import showCustomToast from "../../helpers/notification";
 
 interface props {
   truck: ITruckInfo;
@@ -13,28 +15,45 @@ interface props {
 
 const TruckMenu: FC<props> = ({ truck }) => {
   const [truckData, setTruckData] = useState<ITruckInfo>(truck);
+  const [packages, setPackages] = useState<IPackageInfo[]>([]);
 
   return (
     <DragDropContext
       onDragEnd={(result) => {
         const { draggableId } = result;
-
         const pckg = packageInfoArray.find((pckg: IPackageInfo) => pckg.parcelNumber === draggableId);
 
-        if (!pckg || truckData.currentKG + pckg.packageWeight > truckData.maxKG) {
+        if (!pckg) {
           return;
         }
+
+        //check if package is already on truck
+        if (packages.find((pckg) => pckg.parcelNumber === draggableId)) {
+          showCustomToast("error", "Error adding the package", "Package is already on truck", 2000);
+          return;
+        }
+
+        if (truckData.currentKG + pckg.packageWeight > truckData.maxKG) {
+          showCustomToast("error", "Error adding the package", "You can't add more weight", 2000);
+          return;
+        }
+
+        setPackages([...packages, pckg]);
+        showCustomToast("info", "Package added to truck", undefined, 2000);
 
         setTruckData({ ...truckData, currentKG: truckData.currentKG + pckg.packageWeight });
       }}
     >
       <TruckMenuContainer>
         <div className="info">
-          <span>Shipments /</span> <span className="number">S9889898</span>
+          <span>Shipments /</span> <span className="number">{truck.shipmentNumber} </span>
         </div>
         <div className="title">
-          <h2>Barcelona - Seville, S934345</h2>
-          <div className="span gray">{new Date().toLocaleDateString()}</div>
+          <h2>
+            {truck.trip}, {truck.shipmentNumber}
+          </h2>
+          <Space w="sm" />
+          <div className="span gray"> {new Date().toLocaleDateString()} </div>
         </div>
 
         <div className="mainContainer">
@@ -46,7 +65,11 @@ const TruckMenu: FC<props> = ({ truck }) => {
             <Droppable droppableId="packages">
               {(droppableProvided) => (
                 <>
-                  <Packages {...droppableProvided.droppableProps} innerRef={droppableProvided.innerRef} />
+                  <Packages
+                    packagesOnTruck={packages}
+                    {...droppableProvided.droppableProps}
+                    innerRef={droppableProvided.innerRef}
+                  />
                   {droppableProvided.placeholder}{" "}
                 </>
               )}
@@ -87,6 +110,7 @@ const TruckMenuContainer = styled.section`
   }
 
   .mainContainer {
+    border-radius: 8px;
     width: 90%;
     gap: 1rem;
     display: flex;

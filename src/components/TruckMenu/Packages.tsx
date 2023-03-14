@@ -1,12 +1,16 @@
 import { Checkbox, Divider } from "@mantine/core";
-import React from "react";
+import React, { FC } from "react";
+import { Draggable } from "@hello-pangea/dnd";
 import styled from "styled-components";
 import { packageInfoArray } from "../../dummyData";
 import { IPackageInfo } from "../../interfaces/index";
 
-const Packages = () => {
+interface props extends React.ComponentPropsWithRef<"div"> {
+  innerRef?: React.Ref<HTMLDivElement>;
+}
+const Packages: FC<props> = ({ innerRef, ...rest }) => {
   return (
-    <PackagesContainer>
+    <PackagesContainer {...rest} ref={innerRef}>
       <div className="title">
         <h2>Available packages</h2>
 
@@ -26,17 +30,25 @@ const Packages = () => {
       </div>
       <div className="packagesContainer">
         <ul>
-          {packageInfoArray.map((packageInfo: IPackageInfo) => (
-            <>
-              <div className="package">
-                <li>
-                  <Checkbox color={"grape"} label={packageInfo.parcelNumber} />
-                </li>
-                <li>{packageInfo.packageWeight}</li>
-                <li>{packageInfo.admisionDate.toLocaleDateString()}</li>
-              </div>
-                <Divider />
-            </>
+          {packageInfoArray.map((packageInfo: IPackageInfo, i) => (
+            <Draggable key={packageInfo.parcelNumber} draggableId={packageInfo.parcelNumber} index={i}>
+              {(draggableProvider) => (
+                <div
+                  {...draggableProvider.draggableProps}
+                  {...draggableProvider.dragHandleProps}
+                  ref={draggableProvider.innerRef}
+                  key={packageInfo.parcelNumber}
+                  id={packageInfo.parcelNumber}
+                  className="package"
+                >
+                  <li>
+                    <Checkbox color={"grape"} label={packageInfo.parcelNumber} />
+                  </li>
+                  <li>{packageInfo.packageWeight}</li>
+                  <li>{packageInfo.admisionDate.toLocaleDateString()}</li>
+                </div>
+              )}
+            </Draggable>
           ))}
         </ul>
       </div>
@@ -48,7 +60,7 @@ const PackagesContainer = styled.div`
   .header {
     background-color: #f9f9fb;
     padding: 0.1rem 0;
-    border-radius:1rem;
+    border-radius: 1rem;
 
     ul {
       display: flex;

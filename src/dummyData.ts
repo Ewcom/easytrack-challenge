@@ -47,17 +47,17 @@ export const packageInfoArray: IPackageInfo[] = [
   },
   {
     parcelNumber: "PA-1",
-    packageWeight: 50,
+    packageWeight: 150,
     admisionDate: new Date("2023-03-10"),
   },
   {
     parcelNumber: "PA-2",
-    packageWeight: 20,
+    packageWeight: 420,
     admisionDate: new Date("2023-03-11"),
   },
   {
     parcelNumber: "PA-3",
-    packageWeight: 70,
+    packageWeight: 170,
     admisionDate: new Date("2023-03-11"),
   },
   {
@@ -67,17 +67,17 @@ export const packageInfoArray: IPackageInfo[] = [
   },
   {
     parcelNumber: "PA-5",
-    packageWeight: 10,
+    packageWeight: 310,
     admisionDate: new Date("2023-03-12"),
   },
   {
     parcelNumber: "PA-6",
-    packageWeight: 40,
+    packageWeight: 240,
     admisionDate: new Date("2023-03-12"),
   },
   {
     parcelNumber: "PA-7",
-    packageWeight: 80,
+    packageWeight: 180,
     admisionDate: new Date("2023-03-12"),
   },
   {
@@ -87,7 +87,7 @@ export const packageInfoArray: IPackageInfo[] = [
   },
   {
     parcelNumber: "PA-9",
-    packageWeight: 20,
+    packageWeight: 420,
     admisionDate: new Date("2023-03-12"),
   },
 ];

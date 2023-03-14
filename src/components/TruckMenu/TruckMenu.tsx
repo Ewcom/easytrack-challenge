@@ -1,36 +1,60 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
-import { truckInfoArray } from "../../dummyData";
-import { ITruckInfo } from "../../interfaces";
+import { packageInfoArray, truckInfoArray } from "../../dummyData";
+import { IPackageInfo, ITruckInfo } from "../../interfaces";
 import TruckCard from "../shipments/TruckCard";
 import Packages from "./Packages";
 import Tiers from "./Tiers";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 
 interface props {
   truck: ITruckInfo;
 }
 
 const TruckMenu: FC<props> = ({ truck }) => {
-  return (
-    <TruckMenuContainer>
-      <div className="info">
-        <span>Shipments /</span> <span className="number">S9889898</span>
-      </div>
-      <div className="title">
-        <h2>Barcelona - Seville, S934345</h2>
-        <div className="span gray">{new Date().toLocaleDateString()}</div>
-      </div>
+  const [truckData, setTruckData] = useState<ITruckInfo>(truck);
 
-      <div className="mainContainer">
-        <div className="truckInfo">
-          <TruckCard truckData={truck} simple />
-          <Tiers />
+  return (
+    <DragDropContext
+      onDragEnd={(result) => {
+        const { draggableId } = result;
+
+        const pckg = packageInfoArray.find((pckg: IPackageInfo) => pckg.parcelNumber === draggableId);
+
+        if (!pckg || truckData.currentKG + pckg.packageWeight > truckData.maxKG) {
+          return;
+        }
+
+        setTruckData({ ...truckData, currentKG: truckData.currentKG + pckg.packageWeight });
+      }}
+    >
+      <TruckMenuContainer>
+        <div className="info">
+          <span>Shipments /</span> <span className="number">S9889898</span>
         </div>
-        <div className="packages">
-          <Packages />
+        <div className="title">
+          <h2>Barcelona - Seville, S934345</h2>
+          <div className="span gray">{new Date().toLocaleDateString()}</div>
         </div>
-      </div>
-    </TruckMenuContainer>
+
+        <div className="mainContainer">
+          <div className="truckInfo">
+            <TruckCard truckData={truckData} simple />
+            <Tiers />
+          </div>
+          <div className="packages">
+            <Droppable droppableId="packages">
+              {(droppableProvided) => (
+                <>
+                  <Packages {...droppableProvided.droppableProps} innerRef={droppableProvided.innerRef} />
+                  {droppableProvided.placeholder}{" "}
+                </>
+              )}
+            </Droppable>
+          </div>
+        </div>
+      </TruckMenuContainer>
+    </DragDropContext>
   );
 };
 

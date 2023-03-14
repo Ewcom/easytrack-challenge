@@ -38,6 +38,7 @@ function App() {
               {truckData.map((truck) => {
                 return (
                   <TruckCard
+                    key={truck.shipmentNumber}
                     onClick={() => {
                       setSelectedTruck(truck);
                     }}

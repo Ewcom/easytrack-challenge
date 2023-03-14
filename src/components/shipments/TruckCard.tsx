@@ -21,6 +21,8 @@ const TruckCard: FC<props> = ({ truckData, simple, ...props }) => {
     }
   }
 
+  const loadPercentage = Math.round((truckData.currentKG / truckData.maxKG) * 100);
+
   return (
     <ShipmentContainer {...props}>
       <div className="title">
@@ -32,8 +34,8 @@ const TruckCard: FC<props> = ({ truckData, simple, ...props }) => {
         ) : (
           <h2 className="destination">Truck Load</h2>
         )}
-        <span style={{ color: getPercentageColor(truckData.percentage) }} className="percentage">
-          {truckData.percentage}%
+        <span style={{ color: getPercentageColor(loadPercentage) }} className="percentage">
+          {loadPercentage}%
         </span>
       </div>
 
@@ -61,7 +63,7 @@ const TruckCard: FC<props> = ({ truckData, simple, ...props }) => {
             </>
           ) : null}
         </div>
-        <TruckImage percentage={truckData.percentage} />
+        <TruckImage percentage={loadPercentage} />
       </div>
     </ShipmentContainer>
   );

@@ -85,8 +85,10 @@ const TruckMenuContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 85%;
+  width: 100%;
   padding: 1rem 2rem;
+  padding-left:3rem;
+  box-sizing:border-box;
 
   .info {
     display: flex;
@@ -116,9 +118,10 @@ const TruckMenuContainer = styled.section`
     display: flex;
     background-color: white;
     padding: 1rem;
-    * > {
+   &>* {
       display: flex;
       flex: 1;
+      flex-direction:column;
     }
 
     .packages {
